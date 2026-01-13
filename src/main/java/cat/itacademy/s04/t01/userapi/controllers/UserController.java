@@ -1,9 +1,8 @@
 package cat.itacademy.s04.t01.userapi.controllers;
 
+import cat.itacademy.s04.t01.userapi.dto.CreateUserRequest;
 import cat.itacademy.s04.t01.userapi.model.User;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,5 +15,12 @@ public class UserController {
     @GetMapping
     public List<User> getUsers() {
         return List.copyOf(users);
+    }
+
+    @PostMapping
+    public User createUser(@RequestBody CreateUserRequest request){
+        User newUser = User.create(request.name(), request.email());
+        users.add(newUser);
+        return newUser;
     }
 }
