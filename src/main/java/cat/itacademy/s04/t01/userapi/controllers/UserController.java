@@ -32,5 +32,11 @@ public class UserController {
                 .orElseThrow(() -> new UserNotFoundException(id.toString()));
     }
 
-
+    @GetMapping(params = "name")
+    public List<User> getUsersByName(@RequestParam String name) {
+        String lowerName = name.toLowerCase();
+        return users.stream()
+                .filter(u -> u.name().toLowerCase().contains(lowerName))
+                .toList();
+    }
 }
