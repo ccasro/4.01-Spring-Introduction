@@ -3,8 +3,10 @@ package cat.itacademy.s04.t01.userapi.controllers;
 import cat.itacademy.s04.t01.userapi.dto.CreateUserRequest;
 import cat.itacademy.s04.t01.userapi.exceptions.UserNotFoundException;
 import cat.itacademy.s04.t01.userapi.model.User;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -20,10 +22,11 @@ public class UserController {
     }
 
     @PostMapping
-    public User createUser(@RequestBody CreateUserRequest request){
+    public ResponseEntity<User> createUser(@RequestBody CreateUserRequest request){
         User newUser = User.create(request.name(), request.email());
         users.add(newUser);
-        return newUser;
+
+        return ResponseEntity.created(URI.create("/users/" + newUser.id())).body(newUser);
     }
 
     @GetMapping("/{id}")
@@ -39,4 +42,10 @@ public class UserController {
                 .filter(u -> u.name().toLowerCase().contains(lowerName))
                 .toList();
     }
+
+    static void clearUsers(){
+        users.clear();
+    }
+
+
 }
