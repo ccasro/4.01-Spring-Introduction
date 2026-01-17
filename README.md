@@ -20,6 +20,7 @@ JUnit 5
 Spring Boot Test (MockMvc)
 Jackson (JSON serialization)
 IntelliJ IDEA
+Postman
 
 ## 📋 Requirements
 
